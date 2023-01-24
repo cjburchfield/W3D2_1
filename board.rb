@@ -1,11 +1,16 @@
 require_relative "card.rb"
 
+
 class Board
 
-    def initialize(size)
-        @grid = Array.new(size){ Array.new(size){Card.new} }
-        @size = size
-        @pairs_num = (@size ** 2 ) / 2
+    def initialize(size) #size has to be even
+        @grid = Array.new(@size){Array.new(@size, "_")}
+        if size.odd?
+            @size = size - 1
+        else
+            @size = size
+        end
+        @pairs_num = (@size ** 2) / 2
     end
 
     def [](pos)
@@ -20,7 +25,7 @@ class Board
 
     def grid_random
         array = []
-        2.times {array << rand(0...@size)}
+        2.times{array << rand(0...@size)}
         array
     end
 
@@ -32,32 +37,36 @@ class Board
     end
 
     def empty?(pos)
-        row, col = pos
-        self[pos] == "_"
-    end
+     row, col = pos
+     self[pos] == "_"
+ end
 
-    def populate
-        counter = 0
-        alphabet = []
+ def populate
+     counter = 0 
+     alphabet = []
     ("a".."z").each {|char| alphabet << char}
-        until counter == @pairs_num
-            pair = []
-            until pair.length == 2
-                pos = grid_random
-                pair << pos if valid?(pos) && empty?(pos)
-            end
-           temp = alphabet.sample.upcase
-            pair.each { |pos| self[pos] =temp }
-            counter += 1
-        end
-    end
 
+     until counter == @pairs_num
+         pair = [] 
+         until pair.length == 2
+             pos = grid_random
+             pair << pos if valid?(pos) && empty?(pos) && pair[0] != pos
+         end
+        temp = alphabet.sample.upcase
+         pair.each { |pos| self[pos] = Card.new(face = temp) }
+         counter += 1
+     end
+ end
 
     def print
         @grid.each do |row|
-            puts row.join(" ")
+            row.each do |char|
+                p char
+            end
+            puts
         end
     end
+    
 
 end
 

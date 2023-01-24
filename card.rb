@@ -1,8 +1,6 @@
 class Card
-    def initialize
-        alphabet = []
-        # ("a".."z").each {|char| alphabet << char}
-        @face = "_" # alphabet.sample.upcase
+    def initialize(face = "_")
+        @face = face
         @face_up = false
     end
  
