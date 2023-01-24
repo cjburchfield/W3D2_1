@@ -3,7 +3,7 @@ require_relative "card.rb"
 class Board
 
     def initialize(size)
-        @grid = Array.new(size){ Array.new(size, "_") }
+        @grid = Array.new(size){ Array.new(size){Card.new} }
         @size = size
         @pairs_num = (@size ** 2 ) / 2
     end
@@ -38,16 +38,24 @@ class Board
 
     def populate
         counter = 0
-
+        alphabet = []
+    ("a".."z").each {|char| alphabet << char}
         until counter == @pairs_num
             pair = []
             until pair.length == 2
                 pos = grid_random
                 pair << pos if valid?(pos) && empty?(pos)
             end
-            temp = Card.new
-            pair.each { |pos| self[pos] = temp }
+           temp = alphabet.sample.upcase
+            pair.each { |pos| self[pos] =temp }
             counter += 1
+        end
+    end
+
+
+    def print
+        @grid.each do |row|
+            puts row.join(" ")
         end
     end
 

@@ -1,8 +1,8 @@
 class Card
     def initialize
         alphabet = []
-        ("a".."z").each {|char| alphabet << char}
-        @face = alphabet.sample.upcase
+        # ("a".."z").each {|char| alphabet << char}
+        @face = "_" # alphabet.sample.upcase
         @face_up = false
     end
  
@@ -11,6 +11,9 @@ class Card
         @face
     end
  
+    def face= (str)
+        @face = str
+    end
  
     def reveal
         @face_up = true
